@@ -1,6 +1,6 @@
 clc; clear; close all; warning off all;
 
-% membaca citra rgb
+% membaca citra
 I = imread ('2 tahun 1 bulan.jpeg');
 figure, imshow(I)
 %-----------------------------------------------------------------------
@@ -28,7 +28,7 @@ out (:,:,1) = R*mR;
 out (:,:,2) = G*mG;
 out (:,:,3) = B*mB;
 
-figure, imshow(out)
+%figure, imshow(out)
 
 %-----------------------------------------------------------------------
 %konversi citra RGB menjadi citra YCbCr
@@ -54,8 +54,10 @@ for i = 1:numind
 end
 %-----------------------------------------------------------------------
 
-%melakukan morfologi untuk menyeleksi hasil segmentasi
-bin = imfill(bin, 'holes');
+%melakukan morfologi untuk menyeleksi hasil segmentasi dengan nilai
+%trashhold
+bin = imfill(bin, 'holes'); 
+bin = bwareaopen(bin, 90);
 figure, imshow(bin)
 %-----------------------------------------------------------------------
 
@@ -63,7 +65,6 @@ figure, imshow(bin)
 R (~bin) = 0;
 G (~bin) = 0;
 B (~bin) = 0;
-
 RGB = cat(3, R,G,B);
 figure, imshow (RGB)
 

@@ -78,7 +78,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[filename, pathname] = uigetfile({'*.jpeg';'*.jpg';'*.png';'*.*'});
+[filename, pathname] = uigetfile({'*.png';'*.jpeg';'*.jpg';'*.*'});
 citra = imread([pathname, filename]);
 axes(handles.axes4);
 imshow(citra);
@@ -188,11 +188,18 @@ ciri_uji = [Red,Green,Blue];
 set(handles.edit1, 'string', num2str(Red));
 set(handles.edit2, 'string', num2str(Green));
 set(handles.edit3, 'string', num2str(Blue));
-handles.ciri_uji = ciri_uji;
-
-load Mdl
-hasil_uji = predict (Mdl, ciri_uji);
-set(handles.edit5, 'string',hasil_uji{1})
+hasil = Red+Green+Blue;
+if (hasil < 318.136)
+    set(handles.edit5, 'string','Kesehatannya Normal');
+    set(handles.text12, 'string','Jaga Terus Kesehatan Anak Anda ^_^');
+elseif (hasil > 318.136 && hasil < 689.870)
+    set(handles.edit5, 'string','Kesehatannya Tidak Normal');
+    set(handles.text12, 'string','Segera Bawa Ke Puskesmas Terdekat');
+else
+    set(handles.edit5, 'string','Kesehatannya Tidak Dapat Diklasifikasi');
+    set(handles.text12, 'string','Warna Feses Tidak Sesuai Klasifikasi');
+end
+handles.ciri_uji = ciri_uji;   
 guidata(hObject, handles);
 
 
@@ -313,3 +320,4 @@ set(handles.edit1, 'string', [])
 set(handles.edit2, 'string', [])
 set(handles.edit3, 'string', [])
 set(handles.edit5, 'string', [])
+set(handles.text12, 'string', [])

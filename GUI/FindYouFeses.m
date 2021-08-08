@@ -22,7 +22,7 @@ function varargout = FindYouFeses(varargin)
 
 % Edit the above text to modify the response to help FindYouFeses
 
-% Last Modified by GUIDE v2.5 20-Jun-2021 19:14:19
+% Last Modified by GUIDE v2.5 07-Aug-2021 21:06:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -78,7 +78,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[filename, pathname] = uigetfile({'*.png';'*.jpeg';'*.jpg';'*.*'});
+[filename, pathname] = uigetfile({'*.jpeg';'*.png';'*.jpg';'*.*'});
 citra = imread([pathname, filename]);
 axes(handles.axes4);
 imshow(citra);
@@ -161,7 +161,7 @@ guidata(hObject, handles);
 %---------------------------------------------------------------------
 bin = handles.citraInput;
 %melakukan morfologi untuk menyeleksi hasil segmentasi dengan nilai
-%trashhold
+%treshhold
 bin = imfill(bin, 'holes'); 
 bin = bwareaopen(bin, 100);
 %-----------------------------------------------------------------------
@@ -191,11 +191,14 @@ set(handles.edit3, 'string', num2str(Blue));
 hasil = Red+Green+Blue;
 if (hasil < 318.136)
     set(handles.edit5, 'string','Kesehatannya Normal');
+    %set(handles.edit5,'string', hasil);
     set(handles.text12, 'string','Jaga Terus Kesehatan Anak Anda ^_^');
 elseif (hasil > 318.136 && hasil < 689.870)
-    set(handles.edit5, 'string','Kesehatannya Tidak Normal');
+    set(handles.edit5, 'string','Kesehatannya Terganggu');
+     %set(handles.edit5,'string', hasil);
     set(handles.text12, 'string','Segera Bawa Ke Puskesmas Terdekat');
 else
+     %set(handles.edit5,'string', hasil);
     set(handles.edit5, 'string','Kesehatannya Tidak Dapat Diklasifikasi');
     set(handles.text12, 'string','Warna Feses Tidak Sesuai Klasifikasi');
 end
@@ -321,3 +324,10 @@ set(handles.edit2, 'string', [])
 set(handles.edit3, 'string', [])
 set(handles.edit5, 'string', [])
 set(handles.text12, 'string', [])
+
+
+% --- Executes on button press in pushbutton4.
+function pushbutton4_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
